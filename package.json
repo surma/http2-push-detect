@@ -11,6 +11,9 @@
     "type": "git",
     "url": "github.com/surma/http2-push-detect"
   },
+  "bin": {
+    "http2-push-detect": "index.js"
+  },
   "author": "Surma",
   "license": "Apache-2.0"
 }
