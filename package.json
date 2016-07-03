@@ -1,0 +1,16 @@
+{
+  "name": "http2-push-detect",
+  "version": "1.0.0",
+  "description": "Lists HTTP/2 pushes when requesting an URL",
+  "main": "index.js",
+  "dependencies": {
+    "http2": "^3.3.4"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "github.com/surma/http2-push-detect"
+  },
+  "author": "Surma",
+  "license": "Apache-2.0"
+}
