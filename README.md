@@ -5,4 +5,4 @@ that the client receives via HTTP/2 push.
 Apache 2
 
 ---
-Version 1.0.2
+Version 1.0.3
