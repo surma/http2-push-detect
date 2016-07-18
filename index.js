@@ -17,12 +17,29 @@
  * limitations under the License.
  */
 
-const http2 = require('http2');
+// This is the same as github.com/molnarg/node-http2
+// but with PR #208 (https://github.com/molnarg/node-http2/pull/208)
+// applied.
+const http2 = require('./http2');
 const url = require('url');
 
 const requestUrl = url.parse(process.argv.pop());
 // Security lol
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+// Enable logging in node-http2 if $DEBUG is set to '1'
+if (process.env.DEBUG === '1') {
+  http2.globalAgent._log = {
+    fatal: console.log.bind(console),
+    error: console.log.bind(console),
+    warn : console.log.bind(console),
+    info : console.log.bind(console),
+    debug: console.log.bind(console),
+    trace: console.log.bind(console),
+    child: function() { return this; }
+  };
+}
+
 const request = http2.get(requestUrl);
 
 let pushCount = 0;
@@ -33,13 +50,14 @@ function finish () {
     process.exit();
   }
 }
-request.on('response', response => {
+
+function consumeResponse(response) {
   response.on('data', _ => {});
   response.on('end', finish);
-});
+}
+request.on('response', consumeResponse);
 request.on('push', pushRequest => {
   pushCount += 1;
   console.log('Receiving pushed resource: ' + pushRequest.url);
-  pushRequest.cancel();
-  finish();
+  pushRequest.on('response', consumeResponse);
 });
