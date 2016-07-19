@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+'use strict';
+
 // This is the same as github.com/molnarg/node-http2
 // but with PR #208 (https://github.com/molnarg/node-http2/pull/208)
 // applied.
